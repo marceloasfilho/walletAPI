@@ -1,20 +1,38 @@
 package com.github.marceloasfilho.wallet.repository;
 
 import com.github.marceloasfilho.wallet.entity.User;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
+
+    @Before
+    public void setup() {
+        User user = new User();
+        user.setName("Setup User");
+        user.setEmail("hermencina4136@uorak.com");
+        user.setPassword("Setup Password");
+        this.userRepository.save(user);
+    }
+
+    @After
+    public void close() {
+        this.userRepository.deleteAll();
+    }
 
     @Test
     public void deveSalvarUmUsuario() {
@@ -26,10 +44,10 @@ public class UserRepositoryTest {
         user.setPassword("abcd1234");
 
         // Ação
-        User savedUser = this.userRepository.save(user);
+        User save = this.userRepository.save(user);
 
         // Verificação
-        Assert.assertNotNull(savedUser);
+        Assert.assertNotNull(save);
     }
 
     @Test
@@ -37,11 +55,10 @@ public class UserRepositoryTest {
         // Cenário
         User user = new User();
         user.setName("Marcelo Filho");
-        user.setEmail("marceloandradesilvafilho@gmail.com");
+        user.setEmail("hermencina4136@uorak.com");
         user.setPassword("abcd1234");
 
         // Ação
-        this.userRepository.save(user);
         Optional<User> userByEmail = this.userRepository.findByEmail(user.getEmail());
 
         // Verificação
