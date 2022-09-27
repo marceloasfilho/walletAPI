@@ -1,18 +1,17 @@
 package com.github.marceloasfilho.wallet;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
-@ActiveProfiles("test")
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringRunner.class)
-class WalletApplicationTests {
-
+@SpringBootTest
+public class HelloWorldTests {
     @Test
-    void contextLoads() {
+    public void helloWorld() {
+        assertEquals(1, 1);
     }
-
 }
