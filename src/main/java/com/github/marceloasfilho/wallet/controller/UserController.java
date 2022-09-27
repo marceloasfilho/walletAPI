@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/user")
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(path = "/save")
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody UserDTO userDTO) {
         User save = this.userService.save(userDTO.toModel());
         return new ResponseEntity<>(save, HttpStatus.CREATED);
     }

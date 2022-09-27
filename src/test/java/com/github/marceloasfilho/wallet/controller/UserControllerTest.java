@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -27,9 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
-    private static final String NAME = "NomeDTO";
-    private static final String EMAIL = "EmailDTO";
-    private static final String PASSWORD = "PasswordDTO";
+    private static final String NAME = "Gretchen";
+    private static final String EMAIL = "grethe3105@uorak.com";
+    private static final String PASSWORD = "12345";
     private static final String URL = "/user/save";
 
     @MockBean
@@ -38,14 +39,82 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private String getPayload() throws JsonProcessingException {
+    @Test
+    public void deveRetornarCreatedAoSalvarUmUsuarioValido() throws Exception {
+
+        when(this.userService.save(any(User.class))).thenReturn(this.getMockUser());
+
+        this.mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post(URL)
+                                .content(this.getPayload(NAME, EMAIL, PASSWORD))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.email").value(EMAIL))
+                .andExpect(jsonPath("$.password").value(PASSWORD));
+    }
+
+    @Test
+    public void deveRetornarBadRequestaAoSalvarUsuarioComEmailInvalido() throws Exception {
+        this.mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post(URL)
+                                .content(this.getPayload(NAME, "email", PASSWORD))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deveRetornarBadRequestaAoSalvarUsuarioComEmailEmBranco() throws Exception {
+        this.mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post(URL)
+                                .content(this.getPayload(NAME, "", PASSWORD))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deveRetornarBadRequestaAoSalvarUsuarioComNomeEmBranco() throws Exception {
+        this.mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post(URL)
+                                .content(this.getPayload("", EMAIL, PASSWORD))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deveRetornarBadRequestaAoSalvarUsuarioComSenhaEmBranco() throws Exception {
+        this.mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .post(URL)
+                                .content(this.getPayload(NAME, EMAIL, ""))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    private String getPayload(String name, String email, String password) throws JsonProcessingException {
         UserDTO userDTO = new UserDTO();
-        userDTO.setName(NAME);
-        userDTO.setEmail(EMAIL);
-        userDTO.setPassword(PASSWORD);
+        userDTO.setName(name);
+        userDTO.setEmail(email);
+        userDTO.setPassword(password);
+
+        User user = userDTO.toModel();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(userDTO.toModel());
+        return objectMapper.writeValueAsString(user);
     }
 
     private User getMockUser() {
@@ -54,20 +123,5 @@ public class UserControllerTest {
         user.setEmail(EMAIL);
         user.setPassword(PASSWORD);
         return user;
-    }
-
-    @Test
-    public void deveSalvarUmUsuario() throws Exception {
-
-        when(this.userService.save(any(User.class))).thenReturn(this.getMockUser());
-
-        this.mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post(URL)
-                                .content(this.getPayload())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
     }
 }
