@@ -18,7 +18,6 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
     @PostMapping(path = "/save")
     public ResponseEntity<User> saveUser(@Valid @RequestBody UserDTO userDTO) {
         User save = this.userService.save(userDTO.toModel());
