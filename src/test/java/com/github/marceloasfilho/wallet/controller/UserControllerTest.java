@@ -54,7 +54,7 @@ public class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.email").value(EMAIL))
-                .andExpect(jsonPath("$.password").value(PASSWORD));
+                .andExpect(jsonPath("$.password").doesNotExist());
     }
 
     @Test

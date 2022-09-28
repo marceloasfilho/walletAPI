@@ -21,7 +21,7 @@ public class UserDTO {
 
         user.setName(this.name);
         user.setEmail(this.email);
-        user.setPassword(this.password);
+        user.setPassword(this.password.isEmpty() ? null : this.password);
 
         return user;
     }
