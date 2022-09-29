@@ -1,6 +1,7 @@
 package com.github.marceloasfilho.wallet.dto;
 
 import com.github.marceloasfilho.wallet.entity.User;
+import com.github.marceloasfilho.wallet.util.Bcrypt;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -21,7 +22,7 @@ public class UserDTO {
 
         user.setName(this.name);
         user.setEmail(this.email);
-        user.setPassword(this.password.isEmpty() ? null : this.password);
+        user.setPassword(Bcrypt.getHash(this.password));
 
         return user;
     }
