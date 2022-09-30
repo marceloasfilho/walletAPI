@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class UserWalletDTO {
-    private Long id;
     @NotNull(message = "Informe o id do usuário")
     private Long users;
     @NotNull(message = "Informe o id da carteira")
@@ -24,7 +23,6 @@ public class UserWalletDTO {
         Wallet wallet = new Wallet();
         wallet.setId(this.wallet);
 
-        userWallet.setId(this.id);
         userWallet.setUser(user);
         userWallet.setWallet(wallet);
 

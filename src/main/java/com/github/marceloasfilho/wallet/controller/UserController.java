@@ -36,7 +36,6 @@ public class UserController {
         User user = userDTO.toModel();
 
         this.userService.save(user);
-        userDTO.setPassword(null);
         response.setData(userDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

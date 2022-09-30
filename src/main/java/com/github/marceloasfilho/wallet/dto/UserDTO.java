@@ -6,15 +6,16 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class UserDTO {
-    @NotBlank(message = "THE FIELD 'name' is mandatory")
+    @NotNull(message = "Informe o nome de usuário")
     private String name;
-    @Email(message = "THE FIELD 'email' is mandatory")
-    @NotBlank
+    @Email(message = "Informe o email de usuário")
+    @NotNull
     private String email;
-    @NotBlank(message = "THE FIELD 'password' is mandatory")
+    @NotNull(message = "Informe a senha do usuário")
     private String password;
 
     public User toModel() {
