@@ -36,7 +36,7 @@ public class WalletController {
 
         response.setData(walletDTO);
         this.walletService.save(walletDTO.toModel());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }
