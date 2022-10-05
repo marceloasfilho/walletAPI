@@ -1,5 +1,6 @@
 package com.github.marceloasfilho.wallet.entity;
 
+import com.github.marceloasfilho.wallet.enums.WalletItemTypeEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,14 +25,15 @@ public class WalletItem {
     @NotNull
     private LocalDate date;
     @NotNull
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private WalletItemTypeEnum type;
     @NotNull
     private String description;
     @NotNull
     private BigDecimal value;
 
 
-    public WalletItem(Wallet wallet, LocalDate date, String type, String description, BigDecimal value) {
+    public WalletItem(Wallet wallet, LocalDate date, WalletItemTypeEnum type, String description, BigDecimal value) {
         this.wallet = wallet;
         this.date = date;
         this.type = type;

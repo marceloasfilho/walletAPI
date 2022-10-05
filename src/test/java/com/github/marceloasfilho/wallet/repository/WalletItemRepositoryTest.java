@@ -2,6 +2,7 @@ package com.github.marceloasfilho.wallet.repository;
 
 import com.github.marceloasfilho.wallet.entity.Wallet;
 import com.github.marceloasfilho.wallet.entity.WalletItem;
+import com.github.marceloasfilho.wallet.enums.WalletItemTypeEnum;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WalletItemRepositoryTest {
 
     private static final LocalDate DATA = LocalDate.now();
-    private static final String TYPE = "ENTRADA";
+    private static final WalletItemTypeEnum TYPE = WalletItemTypeEnum.INPUT;
     private static final String DESCRIPTION = "CONTA DE LUZ";
     private static final BigDecimal VALUE = BigDecimal.valueOf(65);
 
