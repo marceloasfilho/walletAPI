@@ -14,7 +14,7 @@ public class UserWalletServiceImpl implements UserWalletService {
     }
 
     @Override
-    public UserWallet save(UserWallet userWallet) {
-        return this.userWalletRepository.save(userWallet);
+    public void save(UserWallet userWallet) {
+        this.userWalletRepository.save(userWallet);
     }
 }
