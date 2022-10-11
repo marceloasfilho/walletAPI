@@ -4,6 +4,8 @@ import com.github.marceloasfilho.wallet.enums.WalletItemTypeEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,7 @@ public class WalletItem {
 
     @JoinColumn(name = "wallet", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Wallet wallet;
     @NotNull
     private LocalDate date;
