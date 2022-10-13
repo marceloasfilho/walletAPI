@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WalletServiceImpl implements WalletService {
-
     private final WalletRepository walletRepository;
 
     public WalletServiceImpl(WalletRepository walletRepository) {

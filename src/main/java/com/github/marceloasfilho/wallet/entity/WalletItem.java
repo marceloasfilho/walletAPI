@@ -22,7 +22,7 @@ public class WalletItem {
     private Long id;
 
     @JoinColumn(name = "wallet", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Wallet wallet;
     @NotNull
