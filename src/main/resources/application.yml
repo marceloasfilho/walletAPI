@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: prod
   application:
     name: walletapi
 
@@ -15,3 +17,6 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+pagination:
+  items_per_page: 10
