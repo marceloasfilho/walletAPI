@@ -1,5 +1,8 @@
 package com.github.marceloasfilho.wallet.dto;
 
+import com.github.marceloasfilho.wallet.entity.Wallet;
+import com.github.marceloasfilho.wallet.entity.WalletItem;
+import com.github.marceloasfilho.wallet.enums.WalletItemTypeEnum;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,4 +25,10 @@ public class WalletItemDTO {
     private String description;
     @NotNull(message = "Informe um valor")
     private BigDecimal value;
+
+    public WalletItem toModel() {
+        Wallet wallet = new Wallet();
+        wallet.setId(this.wallet);
+        return new WalletItem(wallet, this.date, WalletItemTypeEnum.valueOf(this.type), this.description, this.value);
+    }
 }

@@ -20,8 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
@@ -82,5 +81,35 @@ public class WalletItemServiceTest {
         assertNotNull(response);
         assertEquals(1, response.getContent().size());
         assertEquals("CONTA DE LUZ", response.getContent().get(0).getDescription());
+    }
+    @Test
+    public void deveEncontrarWalletItemPorTipoDeWallet(){
+        // Cenário
+        List<WalletItem> walletItems = List.of(this.walletItem);
+
+        // Mock
+        when(this.walletItemRepository.findByWalletIdAndType(anyLong(), any(WalletItemTypeEnum.class))).thenReturn(walletItems);
+
+        // Ação
+        List<WalletItem> response = this.walletItemService.findByWalletIdAndType(2L, WalletItemTypeEnum.INPUT);
+
+        // Verificação
+        assertFalse(response.isEmpty());
+        assertEquals("Carteira 1", response.get(0).getWallet().getName());
+    }
+
+    @Test
+    public void deveSomarPorWalletId(){
+        // Cenário
+        BigDecimal expected = BigDecimal.valueOf(45);
+
+        // Mock
+        when(this.walletItemRepository.sumByWalletId(anyLong())).thenReturn(expected);
+
+        // Ação
+        BigDecimal response = this.walletItemService.sumByWalletId(1L);
+
+        // Verificação
+        assertEquals(expected, response);
     }
 }
