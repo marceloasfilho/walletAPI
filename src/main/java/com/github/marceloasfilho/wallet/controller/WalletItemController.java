@@ -39,15 +39,15 @@ public class WalletItemController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.walletItemService.save(walletItemDTO.toModel());
+        this.walletItemService.save(this.convertDTOtoEntity(walletItemDTO));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{wallet}")
     public ResponseEntity<Response<Page<WalletItemDTO>>> findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(
             @PathVariable("wallet") Long wallet,
-            @RequestParam("startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate,
-            @RequestParam("endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate,
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam(name = "page", defaultValue = "0") int page) {
 
         Response<Page<WalletItemDTO>> response = new Response<>();
@@ -115,12 +115,12 @@ public class WalletItemController {
         Optional<WalletItem> walletItem = this.walletItemService.findById(wallet);
 
         if (walletItem.isEmpty()) {
-            response.getErrors().add("Carteira de id " + wallet + " não encontrada!");
+            response.getErrors().add("WalletItem de id " + wallet + " não encontrada!");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         this.walletItemService.deleteById(wallet);
-        response.setData("Carteira de id " + wallet + " deletada com sucesso!");
+        response.setData("WalletItem de id " + wallet + " deletada com sucesso!");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -130,12 +130,12 @@ public class WalletItemController {
         walletItemDTO.setWallet(walletItem.getWallet().getId());
         walletItemDTO.setDate(walletItem.getDate());
         walletItemDTO.setDescription(walletItem.getDescription());
-        walletItemDTO.setType(walletItemDTO.getType());
+        walletItemDTO.setType(walletItem.getType().toString());
         walletItemDTO.setValue(walletItem.getValue());
         return walletItemDTO;
     }
 
-    private WalletItem convertDTOtoEntity(WalletItemDTO walletItemDTO){
+    private WalletItem convertDTOtoEntity(WalletItemDTO walletItemDTO) {
         WalletItem walletItem = new WalletItem();
         walletItem.setDate(walletItemDTO.getDate());
         walletItem.setDescription(walletItemDTO.getDescription());

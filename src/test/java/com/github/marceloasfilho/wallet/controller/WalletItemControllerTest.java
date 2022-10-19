@@ -67,7 +67,7 @@ public class WalletItemControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.wallet").value(ID))
-                .andExpect(jsonPath("$.data.date").value(this.getLocalDateFormatted(DATE)))
+                .andExpect(jsonPath("$.data.date").value(this.getLocalDateFormatted()))
                 .andExpect(jsonPath("$.data.description").value(DESCRIPTION))
                 .andExpect(jsonPath("$.data.type").value(TYPE.toString()))
                 .andExpect(jsonPath("$.data.value").value(VALUE))
@@ -88,8 +88,8 @@ public class WalletItemControllerTest {
         return mapper.writeValueAsString(walletItemDTO);
     }
 
-    private String getLocalDateFormatted(LocalDate localDate) {
+    private String getLocalDateFormatted() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return dateTimeFormatter.format(localDate);
+        return dateTimeFormatter.format(DATE);
     }
 }

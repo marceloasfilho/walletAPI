@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class WalletItemServiceImpl implements WalletItemService {
-    private WalletItemRepository walletItemRepository;
+    private final WalletItemRepository walletItemRepository;
 
     public WalletItemServiceImpl(WalletItemRepository walletItemRepository) {
         this.walletItemRepository = walletItemRepository;

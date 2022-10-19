@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserWalletServiceImpl implements UserWalletService {
     private final UserWalletRepository userWalletRepository;
+
     public UserWalletServiceImpl(UserWalletRepository userWalletRepository) {
         this.userWalletRepository = userWalletRepository;
     }
+
     @Override
     public void save(UserWallet userWallet) {
         this.userWalletRepository.save(userWallet);

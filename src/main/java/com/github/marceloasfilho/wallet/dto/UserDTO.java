@@ -5,16 +5,16 @@ import com.github.marceloasfilho.wallet.util.Bcrypt;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class UserDTO {
-    @NotNull(message = "Informe o nome de usuário")
+    @NotBlank(message = "Informe o nome de usuário")
     private String name;
     @Email(message = "Informe o email de usuário")
-    @NotNull
+    @NotBlank
     private String email;
-    @NotNull(message = "Informe a senha do usuário")
+    @NotBlank(message = "Informe a senha do usuário")
     private String password;
 
     public User toModel() {

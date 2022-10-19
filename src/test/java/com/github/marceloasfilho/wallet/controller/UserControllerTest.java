@@ -54,7 +54,7 @@ public class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.name").value(NAME))
                 .andExpect(jsonPath("$.data.email").value(EMAIL))
-                .andExpect(jsonPath("$.data.password").doesNotExist());
+                .andExpect(jsonPath("$.data.password").exists());
     }
 
     @Test
@@ -111,10 +111,8 @@ public class UserControllerTest {
         userDTO.setEmail(email);
         userDTO.setPassword(password);
 
-        User user = userDTO.toModel();
-
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(user);
+        return objectMapper.writeValueAsString(userDTO);
     }
 
     private User getMockUser() {
